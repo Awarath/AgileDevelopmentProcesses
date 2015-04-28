@@ -14,8 +14,11 @@ import java.net.URL;
 public class Connector extends AsyncTask<RequestPropertyPair, Void, String>{
 
     //Http methods
-    public static final String METHOD_GET = "GET";
-    public static final String METHOD_POST = "POST";
+    public static final String METHOD_GET   =    "GET";
+    public static final String METHOD_POST  =    "POST";
+    public static final String METHOD_PUT   =    "PUT";
+    public static final String METHOD_PATCH =    "PATCH";
+    public static final String METHOD_DELETE=    "DELETE";
 
     private URL url;
     private ConnectorResult connectorResult;
@@ -25,8 +28,8 @@ public class Connector extends AsyncTask<RequestPropertyPair, Void, String>{
     private boolean sendData;
 
 
-    public Connector(URL url, ConnectorResult connectorResult) {
-        this.url = url;
+    public Connector(ConnectorResult connectorResult) {
+        this.url = null;
         this.connectorResult = connectorResult;
     }
 
@@ -34,14 +37,16 @@ public class Connector extends AsyncTask<RequestPropertyPair, Void, String>{
         this.url = url;
     }
 
-    public void doHttpRequest(String method, String data, RequestPropertyPair... requestPropertyPairs) {
+    public void doHttpRequest(URL url, String method, String data, RequestPropertyPair... requestPropertyPairs) {
+        this.url = url;
         sendData = true;
         this.data = data;
         httpMethod = method;
         this.execute(requestPropertyPairs);
     }
 
-    public void doHttpRequest(String method, RequestPropertyPair... requestPropertyPairs) {
+    public void doHttpRequest(URL url, String method, RequestPropertyPair... requestPropertyPairs) {
+        this.url = url;
         sendData = false;
         httpMethod = method;
         this.execute(requestPropertyPairs);

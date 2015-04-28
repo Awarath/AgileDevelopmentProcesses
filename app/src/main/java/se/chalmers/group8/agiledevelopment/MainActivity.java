@@ -19,9 +19,11 @@ import java.sql.Connection;
 import se.chalmers.group8.communication.http.Connector;
 import se.chalmers.group8.communication.http.ConnectorResult;
 import se.chalmers.group8.communication.http.RequestPropertyPair;
+import se.chalmers.group8.service.connectors.PivotalTracker;
+import se.chalmers.group8.service.connectors.UpdateFinish;
 
 
-public class MainActivity extends ActionBarActivity implements ConnectorResult {
+public class MainActivity extends ActionBarActivity implements UpdateFinish {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +97,7 @@ public class MainActivity extends ActionBarActivity implements ConnectorResult {
 
         new HttpGET().execute("null");*/
 
-        try {
+        /*try {
             URL url = new URL("https://www.pivotaltracker.com/services/v5/projects/1330222/stories/93103212");
             String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
             URL postURL = new URL("https://www.pivotaltracker.com/services/v5/projects/1330222/stories");
@@ -110,16 +112,33 @@ public class MainActivity extends ActionBarActivity implements ConnectorResult {
 
 
 
-            connector.doHttpRequest(Connector.METHOD_POST, data, rpp);
+            //connector.doHttpRequest(Connector.METHOD_POST, data, rpp);
 
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }*/
+
+        String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
+        String url = "https://www.pivotaltracker.com/services/v5/projects/1330222/stories/93109016";
+
+
+        PivotalTracker pt = new PivotalTracker(token, this);
+        pt.setProjectID("1330222");
+        try {
+            String data = "{\"description\":" + "\"" + "This description should now be updated!" + "\"" + "}";
+            //pt.update("93421486", data);
+            //pt.readStory("93103212");
+            //pt.delete("93421486");
+           pt.addComment("93103212", "This is a comment.");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
 
+
     }
 
     @Override
-    public void onConnectorResult(String result) {
+    public void onUpdateFinished(String result) {
         System.out.println(result);
     }
 }

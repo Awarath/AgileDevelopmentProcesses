@@ -37,6 +37,7 @@ public class Connector extends AsyncTask<RequestPropertyPair, Void, String>{
     public void doHttpRequest(String method, String data, RequestPropertyPair... requestPropertyPairs) {
         sendData = true;
         this.data = data;
+        httpMethod = method;
         this.execute(requestPropertyPairs);
     }
 

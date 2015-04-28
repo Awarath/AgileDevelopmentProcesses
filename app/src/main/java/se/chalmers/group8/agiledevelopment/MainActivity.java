@@ -98,11 +98,19 @@ public class MainActivity extends ActionBarActivity implements ConnectorResult {
         try {
             URL url = new URL("https://www.pivotaltracker.com/services/v5/projects/1330222/stories/93103212");
             String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
+            URL postURL = new URL("https://www.pivotaltracker.com/services/v5/projects/1330222/stories");
 
-            Connector connector = new Connector(url, this);
-            RequestPropertyPair rpp = new RequestPropertyPair("X-TrackerToken", token);
 
-            connector.doHttpRequest(Connector.METHOD_GET, rpp);
+            Connector connector = new Connector(postURL, this);
+            RequestPropertyPair rpp[] = new RequestPropertyPair[2];
+            rpp[0] = new RequestPropertyPair("X-TrackerToken", token);
+            rpp[1] = new RequestPropertyPair("Content-Type", "application/json");
+
+            String data = "{\"current_state\":\"started\",\"estimate\":1,\"name\":\"Exhaust ports are ray shielded\"}";
+
+
+
+            connector.doHttpRequest(Connector.METHOD_POST, data, rpp);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

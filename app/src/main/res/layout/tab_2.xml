@@ -8,10 +8,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="This tab shows progress of each member in the team"
+        android:text="Tab 2"
         android:id="@+id/textView"
-        android:layout_centerVertical="true"
         android:textColor="@color/textColor"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

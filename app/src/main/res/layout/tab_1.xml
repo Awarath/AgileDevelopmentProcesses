@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Tab 1"
+        android:text="Tab_1"
         android:id="@+id/textView"
          android:textColor="@color/textColor"
         android:layout_centerVertical="true"

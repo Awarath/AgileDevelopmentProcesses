@@ -126,8 +126,10 @@ public class MainActivity extends ActionBarActivity implements UpdateFinish {
         pt.setProjectID("1330222");
         try {
             String data = "{\"description\":" + "\"" + "This description should now be updated!" + "\"" + "}";
-            pt.update("93421486", data);
-            //pt.readStory("93421486");
+            //pt.update("93421486", data);
+            //pt.readStory("93103212");
+            //pt.delete("93421486");
+           pt.addComment("93103212", "This is a comment.");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

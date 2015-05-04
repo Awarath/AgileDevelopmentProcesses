@@ -24,6 +24,8 @@ public class PivotalTracker implements ConnectorResult {
 
     private UpdateFinish updateFinish;
 
+    private RequestPropertyPair[] rpp;
+
 
     public PivotalTracker(String token, UpdateFinish updateFinish) {
         this.token = token;
@@ -34,14 +36,14 @@ public class PivotalTracker implements ConnectorResult {
         this.updateFinish = updateFinish;
 
         connector = new Connector(this);
+
+        rpp = new RequestPropertyPair[2];
+        rpp[0] = new RequestPropertyPair("X-TrackerToken", token);
+        rpp[1] = new RequestPropertyPair("Content-Type", "application/json");
     }
 
     public void create(String name, String description) throws MalformedURLException{
         URL url = new URL(storiesURL);
-
-        RequestPropertyPair rpp[] = new RequestPropertyPair[2];
-        rpp[0] = new RequestPropertyPair("X-TrackerToken", token);
-        rpp[1] = new RequestPropertyPair("Content-Type", "application/json");
 
         String data = "{\"name\":" + "\"" +  name + "\"" + ",\"description\":" + "\"" + description + "\"" + "}";
 
@@ -58,8 +60,6 @@ public class PivotalTracker implements ConnectorResult {
         String storyURL = storiesURL + storyID;
         URL url = new URL(storyURL);
 
-        RequestPropertyPair rpp = new RequestPropertyPair("X-TrackerToken", token);
-
         connector.doHttpRequest(url, Connector.METHOD_GET, rpp);
 
     }
@@ -67,16 +67,20 @@ public class PivotalTracker implements ConnectorResult {
     public void update(String storyID, String data) throws MalformedURLException{
         URL url = new URL(storiesURL + storyID);
 
-        RequestPropertyPair rpp[] = new RequestPropertyPair[2];
-        rpp[0] = new RequestPropertyPair("X-TrackerToken", token);
-        rpp[1] = new RequestPropertyPair("Content-Type", "application/json");
-
         connector.doHttpRequest(url, Connector.METHOD_PUT, data, rpp);
-
     }
 
-    public void delete() {
+    public void delete(String storyID) throws MalformedURLException{
+        URL url = new URL(storiesURL + storyID);
+        connector.doHttpRequest(url, Connector.METHOD_DELETE, rpp);
+    }
 
+    public void addComment(String storyID, String comment) throws MalformedURLException{
+        URL url = new URL(storiesURL + storyID + "/comments");
+
+        String data = "{\"text\":" + "\"" + comment + "\"" + "}";
+
+        connector.doHttpRequest(url, Connector.METHOD_POST, data, rpp);
     }
 
     public void setProjectID(String projectID) {

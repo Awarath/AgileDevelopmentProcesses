@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- status bar -->
+    <color name="ColorPrimaryDark">#000000</color>
+
+    <!-- app bar -->
+    <color name="ColorPrimary">#374678</color>
+
+    <!-- tab selected -->
+    <color name="tabsScrollColor">#E64A19</color>
+
+    <!-- tab not selected -->
+    <color name="tabsNotSelected">#C5CAE9</color>
+
+    <!-- text color -->
+    <color name="textColor">#000000</color>
+
+    <!-- splashscreen BG color -->
+    <color name="bgColor">#374678</color>
+
+    <!-- text color for Splash Screen -->
+    <color name="textColorS">#FF80AB</color>
+
+</resources>

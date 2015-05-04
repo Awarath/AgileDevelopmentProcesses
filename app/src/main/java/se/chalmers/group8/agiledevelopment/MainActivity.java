@@ -1,34 +1,65 @@
 package se.chalmers.group8.agiledevelopment;
 
-import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.Button;
 
-import java.io.BufferedReader;
+import org.eclipse.egit.github.core.Repository;
+import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.service.RepositoryService;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.Connection;
 
-import se.chalmers.group8.communication.http.Connector;
-import se.chalmers.group8.communication.http.ConnectorResult;
-import se.chalmers.group8.communication.http.RequestPropertyPair;
+import se.chalmers.group8.github.connector.Authenticating;
 import se.chalmers.group8.service.connectors.PivotalTracker;
 import se.chalmers.group8.service.connectors.UpdateFinish;
 
-
 public class MainActivity extends ActionBarActivity implements UpdateFinish {
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        Button button2 = (Button) findViewById(R.id.button2);
+
+        button2.setOnClickListener(new Button.OnClickListener() {
+
+            public void onClick(View v) {
+                //setContentView(R.layout.webview);
+                //GithubConnector GC = new GithubConnector();
+                //GC.onCreate(savedInstanceState);
+                Authenticating at = new Authenticating();
+                try {
+                    GitHubClient client = new GitHubClient();
+                    client.setOAuth2Token("e59caac4be0c98332727683c0447fc178aab0c61");
+                    //client.setCredentials("JiayuHu18","adam101218");
+
+                    //OAuthService os = new OAuthService();
+
+                    RepositoryService service = new RepositoryService();
+                    for (Repository repo : service.getRepositories("defunkt"))
+                        System.out.println(repo.getName() + " Watchers: " + repo.getWatchers());
+                    //at.Authen();
+                    System.out.println("2");
+                    System.out.println("2");
+                    System.out.println("2");
+                }
+               catch (IOException e){
+                    System.out.println(e.getMessage());
+                    System.out.println("1");
+                    System.out.println("1");
+                    System.out.println("1");
+                }
+
+            }
+        });
     }
 
 
@@ -127,9 +158,9 @@ public class MainActivity extends ActionBarActivity implements UpdateFinish {
         try {
             String data = "{\"description\":" + "\"" + "This description should now be updated!" + "\"" + "}";
             //pt.update("93421486", data);
-            //pt.readStory("93103212");
+            pt.readAllStories();
             //pt.delete("93421486");
-           pt.addComment("93103212", "This is a comment.");
+           //pt.addComment("93103212", "This is a comment.");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

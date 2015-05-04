@@ -3,9 +3,13 @@ package se.chalmers.group8.agiledevelopment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -39,6 +43,8 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
+        setContentView(R.layout.activity_single_activity_view);
     }
 
     @Override
@@ -77,15 +83,36 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
             System.out.println(name);
             String description = object.getString("description");
 
-            // Create the text view
-            TextView textView = new TextView(this);
-            textView.setTextSize(40);
-            textView.setText(name + ";" + description);
+            EditText eText = (EditText)findViewById(R.id.storyNameText);
+            eText.setText(name);
 
-            setContentView(textView);
+            eText = (EditText)findViewById(R.id.storyDescriptionText);
+            eText.setText(description);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+    public void submitChanges(View view) {
+        String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
+
+        PivotalTracker tracker = new PivotalTracker(token, this);
+        tracker.setProjectID(projID);
+        try {
+            tracker.update(storyID, updateData());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String updateData(){
+        String toReturn = "{";
+
+        toReturn += "\"name\":\"" + ((EditText)findViewById(R.id.storyNameText)).getText() + "\",";
+        toReturn += "\"description\":\"" + ((EditText)findViewById(R.id.storyDescriptionText)).getText() + "\"}";
+
+        return toReturn;
+    }
+
 }

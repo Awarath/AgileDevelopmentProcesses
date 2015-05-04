@@ -4,11 +4,44 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:id="@+id/singleActivityBackground"
     tools:context="se.chalmers.group8.agiledevelopment.SingleActivityView">
 
-    <TextView android:text="userStory_Placeholder"
+    // Name
+
+    <TextView android:text="name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/storyInfo"/>
+        android:id="@+id/storyName"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/storyNameText"
+        android:layout_toRightOf="@+id/storyName"/>
+
+    // Description
+
+    <TextView android:text="description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/storyDescription"
+        android:layout_below="@+id/storyName"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/storyDescriptionText"
+        android:layout_toRightOf="@+id/storyDescription"
+        android:layout_below="@+id/storyNameText"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/submitButton"
+        android:onClick="submitChanges"
+        android:text="Click me!"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

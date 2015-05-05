@@ -18,8 +18,8 @@ public class MainActivity extends ActionBarActivity {
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]={"Home","Progress", "Tasks"};
-    int NumbOfTabs =3;
+    CharSequence Titles[]={"Home", "Progress", "Tasks", "Planning Game"};
+    int NumbOfTabs = 4;
 
 
     @Override
@@ -42,7 +42,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Assigning the Sliding Tab Layout View
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
-        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
+        tabs.setDistributeEvenly(false); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 
         // Setting Custom Color for the Scroll bar indicator of the Tab View
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {

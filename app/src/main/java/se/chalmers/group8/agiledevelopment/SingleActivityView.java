@@ -70,7 +70,7 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
     }
 
     @Override
-    public void onUpdateFinished(String result) {
+    public void onUpdateFinished(int callFinish, String result) {
         try {
             JSONObject object = new JSONObject(result);
 
@@ -80,14 +80,17 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
 
             final String id = object.getString("id");
             String name = object.getString("name");
-            System.out.println(name);
             String description = object.getString("description");
+            String labels = object.getString("labels");
 
             EditText eText = (EditText)findViewById(R.id.storyNameText);
             eText.setText(name);
 
             eText = (EditText)findViewById(R.id.storyDescriptionText);
             eText.setText(description);
+
+            eText = (EditText)findViewById(R.id.labelsText);
+            eText.setText(labels);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -114,5 +117,4 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
 
         return toReturn;
     }
-
 }

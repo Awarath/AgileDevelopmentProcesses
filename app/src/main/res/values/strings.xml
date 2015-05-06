@@ -3,4 +3,26 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string-array name="current_state">
+        <item>accepted</item>
+        <item>delivered</item>
+        <item>finished</item>
+        <item>started</item>
+        <item>rejected</item>
+        <item>planned</item>
+        <item>unstarted</item>
+        <item>unscheduled</item>
+    </string-array>
+    <string-array name="story_type">
+        <item>feature</item>
+        <item>bug</item>
+        <item>chore</item>
+        <item>release</item>
+    </string-array>
+    <string-array name="points">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>

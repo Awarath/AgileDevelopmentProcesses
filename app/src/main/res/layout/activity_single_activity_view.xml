@@ -42,6 +42,27 @@
         android:layout_toRightOf="@+id/storyDescription"
         android:layout_below="@+id/storyNameText"/>
 
+    // created and updated
+
+    <TextView android:text="description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createdAtText"
+        android:layout_below="@+id/storyName"/>
+
+    <TextView android:text="description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/updatedAtText"
+        android:layout_below="@+id/storyName"/>
+
+    // Owners
+
+    <TextView android:text="owners"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/owners"/>
+
     // Labels
 
     <TextView android:text="labels"
@@ -49,10 +70,41 @@
         android:layout_height="wrap_content"
         android:id="@+id/labels"/>
 
-    <EditText
+    // Status
+
+    <TextView android:text="status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/status"/>
+
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/labelsText"/>
+        android:id="@+id/statusText"/>
+
+    // Story type
+
+    <TextView android:text="story type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/storyType"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/storyTypeText"/>
+
+    // Points
+
+    <TextView android:text="points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/points"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pointsText"/>
 
     <Button
         android:layout_width="wrap_content"

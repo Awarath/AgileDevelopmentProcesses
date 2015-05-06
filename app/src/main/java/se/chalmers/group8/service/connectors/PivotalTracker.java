@@ -20,6 +20,7 @@ public class PivotalTracker implements ConnectorResult {
     public static final int FUNCTION_UPDATE          = 0x02;
     public static final int FUNCTION_DELETE          = 0x03;
     public static final int FUNCTION_ADD_COMMENT     = 0x04;
+    public static final int FUNCTION_GET_MEMBERS     = 0x05;
 
 
     private Connector connector;
@@ -161,6 +162,15 @@ public class PivotalTracker implements ConnectorResult {
         String data = "{\"text\":" + "\"" + comment + "\"" + "}";
 
         connector.doHttpRequest(url, Connector.METHOD_POST, data, rpp);
+    }
+
+    public void getMembers() throws MalformedURLException{
+        callFunction = FUNCTION_GET_MEMBERS;
+
+        String membersURL = projectURL + "/memberships";
+        URL url = new URL(membersURL);
+
+        connector.doHttpRequest(url, Connector.METHOD_GET, rpp);
     }
 
     /**

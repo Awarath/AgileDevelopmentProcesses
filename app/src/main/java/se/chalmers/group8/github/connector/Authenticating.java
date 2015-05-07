@@ -12,21 +12,42 @@ import java.io.IOException;
  */
 public class Authenticating {
 
-    private String token = "e59caac4be0c98332727683c0447fc178aab0c61";
+
 
     //Authenticating
     public static void GetAuthentication() throws IOException {
 
-        GitHubClient client = new GitHubClient();
-        client.setOAuth2Token("token");
+        String token = "e59caac4be0c98332727683c0447fc178aab0c61";
 
+        GitHubClient client = new GitHubClient();
+        client.setOAuth2Token(token);
+        System.out.println("GetAuthentication---------------------------------------------------");
+        //GetRepository();
+
+        Thread thread = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    RepositoryService service = new RepositoryService();
+                    System.out.println("GetRepository-------------------------------------------------------");
+                    for (Repository repo : service.getRepositories("AgileDevelopmentProcesses"))
+                        System.out.println(repo.getName() + " Watchers: " + repo.getWatchers());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 
-    //Get a user's repositories
-    public static void GetRepository () throws IOException {
+
+
+    //Get a user's repositories （unused）
+    public static void GetRepository() throws IOException {
 
         RepositoryService service = new RepositoryService();
-        for (Repository repo : service.getRepositories("defunkt"))
+        System.out.println("GetRepository-------------------------------------------------------");
+        for (Repository repo : service.getRepositories("AgileDevelopmentProcesses"))
             System.out.println(repo.getName() + " Watchers: " + repo.getWatchers());
 
     }

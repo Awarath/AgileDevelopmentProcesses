@@ -22,7 +22,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name" >
         </activity>
-        
+
         <activity
                 android:name=".SingleActivityView"
                 android:label="Single activity view" >

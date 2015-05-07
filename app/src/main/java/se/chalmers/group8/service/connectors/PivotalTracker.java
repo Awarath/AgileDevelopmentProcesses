@@ -20,7 +20,6 @@ public class PivotalTracker implements ConnectorResult {
     public static final int FUNCTION_UPDATE          = 0x02;
     public static final int FUNCTION_DELETE          = 0x03;
     public static final int FUNCTION_ADD_COMMENT     = 0x04;
-    public static final int FUNCTION_GET_MEMBERS     = 0x05;
 
 
     private Connector connector;
@@ -89,6 +88,20 @@ public class PivotalTracker implements ConnectorResult {
         readStory("");
     }
 
+    /**
+     * Reads the specified fields of all stories. Gets the result in JSON format.
+     * Example: readStory("name,description,story_type,comments")
+     * @param fields the fields to be read (i.e. "comments" for only comments)
+     */
+    public void readAllStories(String fields) throws MalformedURLException{
+        callFunction = FUNCTION_READ;
+
+        String storyURL = storiesURL.substring(0, storiesURL.length()-1) + "?fields=" + fields;
+        URL url = new URL(storyURL);
+
+        connector.doHttpRequest(url, Connector.METHOD_GET, rpp);
+    }
+
 
     /**
      * Reads the default fields of the specified story and gets the result in JSON format.
@@ -123,7 +136,7 @@ public class PivotalTracker implements ConnectorResult {
 
     /**
      * Updates the specified story's fields using the specified data.
-     * Example: update("id", {\"description\":\"This is an updated description\"}
+     * Example: update("id", "{\"description\":\"This is an updated description\"}"
      * @param storyID the story ID
      * @param data specify both field and data that the field should be updated with
      * @throws MalformedURLException
@@ -164,15 +177,6 @@ public class PivotalTracker implements ConnectorResult {
         connector.doHttpRequest(url, Connector.METHOD_POST, data, rpp);
     }
 
-    public void getMembers() throws MalformedURLException{
-        callFunction = FUNCTION_GET_MEMBERS;
-
-        String membersURL = projectURL + "/memberships";
-        URL url = new URL(membersURL);
-
-        connector.doHttpRequest(url, Connector.METHOD_GET, rpp);
-    }
-
     /**
      * Sets the current project ID.
      * @param projectID the project ID
@@ -186,6 +190,9 @@ public class PivotalTracker implements ConnectorResult {
 
     @Override
     public void onConnectorResult(String result) {
+        // A connector can only be used once because of the AsyncTask
+        connector = new Connector(this);
+
         updateFinish.onUpdateFinished(callFunction, result);
     }
 }

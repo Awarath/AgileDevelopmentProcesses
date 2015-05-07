@@ -23,8 +23,7 @@ import se.chalmers.group8.service.connectors.PivotalTracker;
 import se.chalmers.group8.service.connectors.UpdateFinish;
 
 
-public class MainActivity extends ActionBarActivity implements UpdateFinish {
-
+public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,93 +51,5 @@ public class MainActivity extends ActionBarActivity implements UpdateFinish {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void buttonClicked(View view) {
-       /* Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
-
-
-        class HttpGET extends AsyncTask<String, Void, String> {
-            protected String doInBackground(String... urls) {
-
-                try {
-
-
-                    String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
-                    String url = "https://www.pivotaltracker.com/services/v5/projects/1330222/stories/93109016";
-
-
-                    URL pivotal = new URL(url);
-                    HttpURLConnection urlConn = (HttpURLConnection)pivotal.openConnection();
-
-                    urlConn.setRequestMethod("GET");
-                    urlConn.setRequestProperty("X-TrackerToken", token);
-
-                    BufferedReader br = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
-                    String result;
-                    while ((result = br.readLine()) != null)
-                        System.out.println(result);
-                    br.close();
-
-                    return result;
-
-
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                return null;
-
-            }
-        }
-
-        new HttpGET().execute("null");*/
-
-        /*try {
-            URL url = new URL("https://www.pivotaltracker.com/services/v5/projects/1330222/stories/93103212");
-            String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
-            URL postURL = new URL("https://www.pivotaltracker.com/services/v5/projects/1330222/stories");
-
-
-            Connector connector = new Connector(postURL, this);
-            RequestPropertyPair rpp[] = new RequestPropertyPair[2];
-            rpp[0] = new RequestPropertyPair("X-TrackerToken", token);
-            rpp[1] = new RequestPropertyPair("Content-Type", "application/json");
-
-            String data = "{\"current_state\":\"started\",\"estimate\":1,\"name\":\"Exhaust ports are ray shielded\"}";
-
-
-
-            //connector.doHttpRequest(Connector.METHOD_POST, data, rpp);
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }*/
-
-        String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
-        String url = "https://www.pivotaltracker.com/services/v5/projects/1330222/stories/93109016";
-
-
-        PivotalTracker pt = new PivotalTracker(token, this);
-        pt.setProjectID("1330222");
-        try {
-            String data = "{\"description\":" + "\"" + "This description should now be updated!" + "\"" + "}";
-            //pt.update("93421486", data);
-            //pt.readStory("93103212");
-            //pt.delete("93421486");
-           pt.addComment("93103212", "This is a comment.");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    @Override
-    public void onUpdateFinished(String result) {
-        System.out.println(result);
     }
 }

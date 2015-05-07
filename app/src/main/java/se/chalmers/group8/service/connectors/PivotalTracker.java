@@ -200,6 +200,10 @@ public class PivotalTracker implements ConnectorResult {
      *
      * @param projectID the project ID
      */
+    /**
+     * Sets the current project ID.
+     * @param projectID the project ID
+     */
     public void setProjectID(String projectID) {
         this.projectID = projectID;
         projectURL = baseURL + "/" + this.projectID;

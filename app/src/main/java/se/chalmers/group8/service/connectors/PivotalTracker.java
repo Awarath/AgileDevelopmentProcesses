@@ -1,5 +1,8 @@
 package se.chalmers.group8.service.connectors;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -30,6 +33,7 @@ public class PivotalTracker implements ConnectorResult {
 
     private String token;
     private String projectID;
+    private String userID;
 
     private UpdateFinish updateFinish;
 
@@ -63,6 +67,32 @@ public class PivotalTracker implements ConnectorResult {
         rpp = new RequestPropertyPair[2];
         rpp[0] = new RequestPropertyPair("X-TrackerToken", token);
         rpp[1] = new RequestPropertyPair("Content-Type", "application/json");
+
+        initUserProfile();
+    }
+
+    private void initUserProfile() {
+        Connector initUser = new Connector(new ConnectorResult() {
+            @Override
+            public void onConnectorResult(String result) {
+                JSONObject userProfile = null;
+                try {
+                    userProfile = new JSONObject(result);
+                    userID = userProfile.getString("id");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        String profileURL = "https://www.pivotaltracker.com/services/v5/me";
+        try {
+            URL url = new URL(profileURL);
+            initUser.doHttpRequest(url, Connector.METHOD_GET, rpp);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -208,6 +238,10 @@ public class PivotalTracker implements ConnectorResult {
         this.projectID = projectID;
         projectURL = baseURL + "/" + this.projectID;
         storiesURL = projectURL + "/stories/";
+    }
+
+    public String getUserID() {
+        return userID;
     }
 
 

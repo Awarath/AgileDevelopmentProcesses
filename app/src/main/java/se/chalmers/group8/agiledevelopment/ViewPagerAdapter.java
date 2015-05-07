@@ -42,12 +42,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 return tab3;
 
             case 3:
-                /*Tab4 tab4 = new Tab4();
-                return tab4;*/
+                Tab4 tab4 = new Tab4();
+                return tab4;
 
             default:
-                Tab3 tab4 = new Tab3();
-                return tab4;
+                return null;
         }
 
     }

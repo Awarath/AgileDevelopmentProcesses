@@ -7,16 +7,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import org.eclipse.egit.github.core.Repository;
-import org.eclipse.egit.github.core.client.GitHubClient;
-import org.eclipse.egit.github.core.service.RepositoryService;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 
 import se.chalmers.group8.github.connector.Authenticating;
 import se.chalmers.group8.service.connectors.PivotalTracker;
 import se.chalmers.group8.service.connectors.UpdateFinish;
+
+
 
 public class MainActivity extends ActionBarActivity implements UpdateFinish {
 
@@ -33,29 +31,16 @@ public class MainActivity extends ActionBarActivity implements UpdateFinish {
 
             public void onClick(View v) {
                 //setContentView(R.layout.webview);
-                //GithubConnector GC = new GithubConnector();
-                //GC.onCreate(savedInstanceState);
-                Authenticating at = new Authenticating();
+
+                //Authenticating at = new Authenticating();
                 try {
-                    GitHubClient client = new GitHubClient();
-                    client.setOAuth2Token("e59caac4be0c98332727683c0447fc178aab0c61");
-                    //client.setCredentials("JiayuHu18","adam101218");
+                    Authenticating.GetAuthentication();
 
-                    //OAuthService os = new OAuthService();
-
-                    RepositoryService service = new RepositoryService();
-                    for (Repository repo : service.getRepositories("defunkt"))
-                        System.out.println(repo.getName() + " Watchers: " + repo.getWatchers());
-                    //at.Authen();
-                    System.out.println("2");
-                    System.out.println("2");
-                    System.out.println("2");
                 }
                catch (IOException e){
+                    System.out.println("Error--------------------------------------------------------------");
                     System.out.println(e.getMessage());
-                    System.out.println("1");
-                    System.out.println("1");
-                    System.out.println("1");
+
                 }
 
             }

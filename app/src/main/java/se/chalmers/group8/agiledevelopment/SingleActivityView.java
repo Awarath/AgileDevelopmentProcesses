@@ -48,7 +48,7 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
         PivotalTracker tracker = new PivotalTracker(token, this);
         tracker.setProjectID("1330222");
         try {
-            tracker.readStory(storyID);
+            tracker.readStory(storyID, "id,name,description,owner_ids,labels,current_state,story_type,created_at,updated_at,estimate");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -88,6 +88,8 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
                         (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
+                System.out.println(result);
+
                 final String id = object.getString("id");
                 String name = object.getString("name");
                 String description = object.getString("description");
@@ -97,7 +99,9 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
                 String type = object.getString("story_type");
                 String createdAt = object.getString("created_at");
                 String lastUpdated = object.getString("updated_at");
-                String estimate = object.getString("estimate");
+                String estimate = "0";
+                if (object.has("estimate"))
+                    estimate = object.getString("estimate");
 
                 EditText eText = (EditText) findViewById(R.id.storyNameText);
                 eText.setText(name);
@@ -176,6 +180,8 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
     }
 
     private String generateLabels(String labels) throws JSONException {
+        if (labels.length() == 2)
+            return "";
         String toReturn = "";
         JSONArray object = new JSONArray(labels);
         for (int i = 0; i < object.length(); i++) {
@@ -200,6 +206,8 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
     }
 
     private String generateMembers(String memberList) {
+        if (memberList.length() == 2)
+            return "";
         String toReturn = "";
 
         memberList = memberList.replace("[","");

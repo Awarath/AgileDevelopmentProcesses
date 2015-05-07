@@ -48,7 +48,6 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
     private int     storyVoteTotal;
     private int     storyNumberOfVotes;
 
-    private String userPivotalID = "1656672";
     private String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
     private String projectID = "1330222";
 
@@ -246,7 +245,7 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
                             // Votes look like i.e "VOTE:1"
                             if(text.substring(0, text.length()-1).equals("VOTE:")) {
                                 // A user can only vote once on a story!
-                                if(personID.equals(userPivotalID)) {
+                                if(personID.equals(pt.getUserID())) {
                                    hasVoted = true;
                                   break;
                                 } else {

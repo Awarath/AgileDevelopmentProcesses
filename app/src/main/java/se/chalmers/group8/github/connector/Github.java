@@ -1,5 +1,9 @@
 package se.chalmers.group8.github.connector;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -25,8 +29,9 @@ public class Github implements ConnectorResult {
         //RequestPropertyPair rpp = new RequestPropertyPair()
 
         try {
-            URL url = new URL("https://api.github.com/");
-            connector.doHttpRequest(url, Connector.METHOD_GET);
+            URL branchesURL = new URL("https://api.github.com/repos/Awarath/AgileDevelopmentProcesses/branches");
+            URL commitsURL = new URL("https://api.github.com/repos/Awarath/AgileDevelopmentProcesses/commits/fbfcfc1fe4080528228a37eb52ed491f58ce3b6c");
+            connector.doHttpRequest(commitsURL, Connector.METHOD_GET);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -34,6 +39,38 @@ public class Github implements ConnectorResult {
 
     @Override
     public void onConnectorResult(String result) {
-        System.out.println(result);
+
+        /*try { For parsing the branches
+            JSONArray array = new JSONArray(result);
+            for(int i = 0; i < array.length(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                JSONObject commit = obj.getJSONObject("commit");
+                String sha = commit.getString("sha");
+                System.out.println(sha);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
+
+
+        // For parsing the commits
+        try {
+            JSONObject jsonResult = new JSONObject(result);
+            JSONObject commit = jsonResult.getJSONObject("commit");
+            JSONObject committer = commit.getJSONObject("committer");
+            String name = committer.getString("name");
+            String time = committer.getString("date");
+            String message = commit.getString("message");
+
+            System.out.println("Name:" + name);
+            System.out.println("Time:" + time);
+            System.out.println("Message:" + message);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

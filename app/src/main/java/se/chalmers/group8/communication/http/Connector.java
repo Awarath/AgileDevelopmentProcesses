@@ -8,8 +8,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+
 /**
- * Handles connection to URLs and uses HTTP methods to do HTTP requests.
+ * Handles connections to URLs and uses HTTP methods to query HTTP requests.
  */
 public class Connector extends AsyncTask<RequestPropertyPair, Void, String>{
 
@@ -28,15 +29,22 @@ public class Connector extends AsyncTask<RequestPropertyPair, Void, String>{
     private boolean sendData;
 
 
+    /**
+     * The constructor takes a ConnectorResult as parameter that specifies what should happened when a query has returned a result.
+     * @param connectorResult the class that handles the results of a request.
+     */
     public Connector(ConnectorResult connectorResult) {
         this.url = null;
         this.connectorResult = connectorResult;
     }
 
-    public void setUrl(URL url) {
-        this.url = url;
-    }
-
+    /**
+     * Queries an HTTP request with data to send. Usually used with HTTP methods "POST", "PUT", "PATCH".
+     * @param url the URL object containing the url to query
+     * @param method choose an http method (available as static constants in Connector)
+     * @param data the data to send
+     * @param requestPropertyPairs the header/value pair
+     */
     public void doHttpRequest(URL url, String method, String data, RequestPropertyPair... requestPropertyPairs) {
         this.url = url;
         sendData = true;
@@ -45,6 +53,12 @@ public class Connector extends AsyncTask<RequestPropertyPair, Void, String>{
         this.execute(requestPropertyPairs);
     }
 
+    /**
+     * Queries an HTTP request without sending data. Usually used with HTTP methods "GET", "DELETE".
+     * @param url the URL object containing the url to query
+     * @param method choose an http method (available as static constants in Connector)
+     * @param requestPropertyPairs the header/value pair
+     */
     public void doHttpRequest(URL url, String method, RequestPropertyPair... requestPropertyPairs) {
         this.url = url;
         sendData = false;

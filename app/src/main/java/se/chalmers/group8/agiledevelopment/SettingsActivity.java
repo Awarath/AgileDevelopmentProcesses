@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,9 +21,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.MalformedURLException;
 
 import se.chalmers.group8.service.connectors.PivotalTracker;
 import se.chalmers.group8.service.connectors.UpdateFinish;
+import se.chalmers.group8.session.PivotalSession;
 
 
 public class SettingsActivity extends ActionBarActivity implements UpdateFinish {
@@ -30,7 +35,7 @@ public class SettingsActivity extends ActionBarActivity implements UpdateFinish 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        String[] savedData = readFromFile().split(";");
+        String[] savedData = readFromFile("config.txt").split(";");
         if (savedData.length == 2) {
             EditText userNameText = (EditText) findViewById(R.id.userName);
             EditText passwordText = (EditText) findViewById(R.id.password);
@@ -63,26 +68,46 @@ public class SettingsActivity extends ActionBarActivity implements UpdateFinish 
 
     public void loginButtonClicked(View view) {
 
-        System.out.println("Hallo Welt!" + getFilesDir());
         EditText userNameText = (EditText) findViewById(R.id.userName);
         EditText passwordText = (EditText) findViewById(R.id.password);
 
-        //PivotalTracker tracker = new PivotalTracker();
+        handleLogin(userNameText.getText().toString(), passwordText.getText().toString());
+    }
 
-        String filename = "gitTracker";
-        String string = "Hello world!";
+    public void handleLogin(String username, String password) {
+        writeToFile(username + ";" + password, "config.txt");
 
-        writeToFile(userNameText.getText() + ";" + passwordText.getText());
+        PivotalTracker tracker = new PivotalTracker(this);
+        try {
+            tracker.login(username, password);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
         @Override
     public void onUpdateFinished(int callFunction, String result) {
+        System.out.println(result);
 
+        try {
+
+            JSONObject object = new JSONObject(result);
+
+            PivotalSession pivotalSession = PivotalSession.getInstance();
+            pivotalSession.setSession(object.getString("username"), object.getString("api_token"));
+
+            Toast.makeText(getApplicationContext(), "successfully logged in as " + object.getString("username"), Toast.LENGTH_SHORT).show();
+            finish();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "Could not log in", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void writeToFile(String data) {
+    public void writeToFile(String data, String filename) {
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("config.txt", Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(filename, Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         }
@@ -92,12 +117,12 @@ public class SettingsActivity extends ActionBarActivity implements UpdateFinish 
     }
 
 
-    private String readFromFile() {
+    public String readFromFile(String filename) {
 
         String ret = "";
 
         try {
-            InputStream inputStream = openFileInput("config.txt");
+            InputStream inputStream = openFileInput(filename);
 
             if ( inputStream != null ) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);

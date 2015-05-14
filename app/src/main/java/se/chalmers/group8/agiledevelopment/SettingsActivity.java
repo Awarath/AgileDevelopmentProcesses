@@ -74,7 +74,14 @@ public class SettingsActivity extends ActionBarActivity implements UpdateFinish 
         handleLogin(userNameText.getText().toString(), passwordText.getText().toString());
     }
 
-    public void handleLogin(String username, String password) {
+    public boolean handleLogin(String username, String password) {
+
+        PivotalSession session = PivotalSession.getInstance();
+        if (session.getStatus().equals("loggedIn")) {
+            Toast.makeText(getApplicationContext(), "Already logged in. Please log out first", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         writeToFile(username + ";" + password, "config.txt");
 
         PivotalTracker tracker = new PivotalTracker(this);
@@ -83,6 +90,8 @@ public class SettingsActivity extends ActionBarActivity implements UpdateFinish 
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
+        return true;
     }
 
         @Override

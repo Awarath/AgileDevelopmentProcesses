@@ -21,6 +21,7 @@ import java.net.MalformedURLException;
 
 import se.chalmers.group8.service.connectors.PivotalTracker;
 import se.chalmers.group8.service.connectors.UpdateFinish;
+import se.chalmers.group8.session.PivotalSession;
 
 
 public class Tab3 extends Fragment implements UpdateFinish {
@@ -31,15 +32,31 @@ public class Tab3 extends Fragment implements UpdateFinish {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v =inflater.inflate(R.layout.tab_3,container,false);
 
-        String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
+        PivotalSession session = PivotalSession.getInstance();
+        if(session.getStatus().equals("loggedIn")) {
 
-        PivotalTracker tracker = new PivotalTracker(token, this);
-        tracker.setProjectID("1330222");
-        try {
-            tracker.readAllStories();
+            PivotalTracker tracker = new PivotalTracker(session.getToken(), this);
+            tracker.setProjectID("1330222");
+            try {
+                tracker.readAllStories();
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            LinearLayout ll = (LinearLayout) v.findViewById(R.id.buttonLayout);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
+                    (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            Button newButton = new Button(getActivity());
+            newButton.setText("Login");
+            final Intent intent = new Intent(getActivity(), SettingsActivity.class);
+            newButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    startActivity(intent);
+                }
+            });
+            ll.addView(newButton, lp);
         }
 
         return v;

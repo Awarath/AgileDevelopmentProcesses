@@ -21,6 +21,7 @@ public class PivotalTracker implements ConnectorResult {
     public static final int FUNCTION_DELETE = 0x03;
     public static final int FUNCTION_ADD_COMMENT = 0x04;
     public static final int FUNCTION_GET_MEMBERS = 0x05;
+    public static final int FUNCTION_CREATE_TASK = 0x06;
 
     private Connector connector;
 
@@ -78,6 +79,22 @@ public class PivotalTracker implements ConnectorResult {
         URL url = new URL(storiesURL);
 
         String data = "{\"name\":" + "\"" + name + "\"" + ",\"description\":" + "\"" + description + "\"" + "}";
+
+        connector.doHttpRequest(url, Connector.METHOD_POST, data, rpp);
+    }
+
+    /**
+     * Create a new task with the in the specified story with a description.
+     * @param storyID the story ID to which the task belong
+     * @param description the description of the task
+     * @throws MalformedURLException
+     */
+    public void createTask(String storyID, String description) throws MalformedURLException{
+        callFunction = FUNCTION_CREATE_TASK;
+        String tasksURL = storiesURL + storyID + "/tasks";
+        URL url = new URL(tasksURL);
+
+        String data = "{\"description\":" + "\"" + description + "\"" + "}";
 
         connector.doHttpRequest(url, Connector.METHOD_POST, data, rpp);
     }

@@ -1,5 +1,6 @@
 package se.chalmers.group8.agiledevelopment;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -7,8 +8,11 @@ import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -34,6 +38,7 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
     String projID;
     String owners;
     ArrayList<Member> members;
+    PivotalTracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +50,10 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
 
         String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
 
-        PivotalTracker tracker = new PivotalTracker(token, this);
+        tracker = new PivotalTracker(token, this);
         tracker.setProjectID("1330222");
         try {
-            tracker.readStory(storyID, "id,name,description,owner_ids,labels,current_state,story_type,created_at,updated_at,estimate");
+            tracker.readStory(storyID, "id,name,description,owner_ids,labels,current_state,story_type,created_at,updated_at,estimate,tasks");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -151,7 +156,10 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
                     e.printStackTrace();
                 }
 
-            } else  {
+                // Read the tasks of the story
+                readTasks(result);
+
+            } else if(callFinish == PivotalTracker.FUNCTION_GET_MEMBERS)  {
 
                 members = new ArrayList<Member>();
                 JSONArray obj = new JSONArray(result);
@@ -202,6 +210,55 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
         } catch (MalformedURLException e) {
             e.printStackTrace();
             Toast.makeText(getApplicationContext(), "Can't update: Invalid data", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void readTasks(String result) {
+        try {
+            JSONObject obj = new JSONObject(result);
+            JSONArray tasks = obj.getJSONArray("tasks");
+
+            for(int i = 0; i < tasks.length(); i++) {
+                JSONObject task = tasks.getJSONObject(i);
+                String id = task.getString("id");
+                String description = task.getString("description");
+                boolean isComplete = task.getBoolean("complete");
+
+                addTaskCheckBox(id, description, isComplete);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addTaskCheckBox(final String taskID, final String taskDescription, final boolean isComplete) {
+        LinearLayout taskLayout = (LinearLayout) findViewById(R.id.subTaskLayout);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        CheckBox taskCheckBox = new CheckBox(this);
+
+        taskCheckBox.setLayoutParams(layoutParams);
+        taskCheckBox.setText(taskDescription);
+        if(isComplete)
+            taskCheckBox.setChecked(true);
+
+        taskCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updatePivotalTrackerTask(storyID, taskID, isChecked);
+            }
+        });
+
+        taskLayout.addView(taskCheckBox);
+    }
+
+    private void updatePivotalTrackerTask(String storyID, String taskID, boolean isChecked) {
+        try {
+            if(isChecked)
+                tracker.update(storyID, taskID, "{\"complete\":true}");
+            else
+                tracker.update(storyID, taskID, "{\"complete\":false}");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
     }
 

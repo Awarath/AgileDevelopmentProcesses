@@ -157,6 +157,20 @@ public class PivotalTracker implements ConnectorResult {
     }
 
     /**
+     * Updates the specified task's fields of the specified story using the specified data.
+     * Example: update("storyID", "taskID", "{\"description\":\"This is an updated description\"}"
+     *
+     * @param storyID the story ID
+     * @param taskID  the task ID
+     * @param data    specify both field and data that the field should be updated with
+     * @throws MalformedURLException
+     */
+    public void update(String storyID, String taskID, String data) throws MalformedURLException{
+        storyID += "/tasks/" + taskID;
+        update(storyID, data);
+    }
+
+    /**
      * Deletes the specified story.
      *
      * @param storyID the story ID

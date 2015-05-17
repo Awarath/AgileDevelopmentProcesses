@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/singleActivityBackground"
     tools:context="se.chalmers.group8.agiledevelopment.SingleActivityView"
     android:orientation="vertical">
 
@@ -13,105 +12,144 @@
         android:layout_width="match_parent"
         />
 
-    // Name
-
-    <TextView android:text="name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/storyName"/>
-
-    <EditText
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:id="@+id/storyNameText"
-        android:layout_toRightOf="@+id/storyName"/>
+        android:scrollbars="vertical">
 
-    // Description
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/singleActivityBackground">
 
-    <TextView android:text="description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/storyDescription"
-        android:layout_below="@+id/storyName"/>
+            // Name
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/storyDescriptionText"
-        android:layout_toRightOf="@+id/storyDescription"
-        android:layout_below="@+id/storyNameText"/>
+            <TextView android:text="name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/storyName"/>
 
-    // created and updated
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/storyNameText"
+                android:layout_toRightOf="@+id/storyName"/>
 
-    <TextView android:text="description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/createdAtText"
-        android:layout_below="@+id/storyName"/>
+            // Description
 
-    <TextView android:text="description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/updatedAtText"
-        android:layout_below="@+id/storyName"/>
+            <TextView android:text="description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/storyDescription"
+                android:layout_below="@+id/storyName"/>
 
-    // Owners
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/storyDescriptionText"
+                android:layout_toRightOf="@+id/storyDescription"
+                android:layout_below="@+id/storyNameText"/>
 
-    <TextView android:text="owners"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/owners"/>
+            // created and updated
 
-    // Labels
+            <TextView android:text="description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/createdAtText"
+                android:layout_below="@+id/storyName"/>
 
-    <TextView android:text="labels"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/labels"/>
+            <TextView android:text="description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/updatedAtText"
+                android:layout_below="@+id/storyName"/>
 
-    // Status
+            // Owners
 
-    <TextView android:text="status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/status"/>
+            <TextView android:text="owners"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/owners"/>
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/statusText"/>
+            // Labels
 
-    // Story type
+            <TextView android:text="labels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/labels"/>
 
-    <TextView android:text="story type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/storyType"/>
+            // Status
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/storyTypeText"/>
+            <TextView android:text="status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/status"/>
 
-    // Points
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/statusText"/>
 
-    <TextView android:text="points"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/points"/>
+            // Story type
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/pointsText"/>
+            <TextView android:text="story type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/storyType"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/submitButton"
-        android:onClick="submitChanges"
-        android:text="submit"
-        android:layout_centerInParent="true"/>
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/storyTypeText"/>
 
+            // Points
+
+            <TextView android:text="points"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/points"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/pointsText"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/submitButton"
+                android:onClick="submitChanges"
+                android:text="submit"
+                android:layout_centerInParent="true"/>
+
+            // Sub tasks
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:text="Sub tasks"
+                android:textSize="20dp"/>
+
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:id="@+id/subTaskLayout">
+
+                </LinearLayout>
+
+            <ImageView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:src="@drawable/addbutton"
+                android:layout_margin="5dp"
+                android:layout_gravity="end|bottom"
+                android:id="@+id/addSubTaskButton"/>
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>

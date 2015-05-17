@@ -2,6 +2,7 @@ package se.chalmers.group8.agiledevelopment;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Layout;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -81,6 +83,19 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        ImageView addTaskButton = (ImageView) findViewById(R.id.addSubTaskButton);
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createTask();
+            }
+        });
     }
 
     @Override
@@ -178,6 +193,14 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
 
                 TextView textView = (TextView) findViewById(R.id.owners);
                 textView.setText("owners: " + generateMembers(owners));
+            } else if(callFinish == PivotalTracker.FUNCTION_CREATE_TASK) {
+                LinearLayout taskLayout = (LinearLayout) findViewById(R.id.subTaskLayout);
+                taskLayout.removeAllViews();
+                try {
+                    tracker.readStory(storyID, "id,name,description,owner_ids,labels,current_state,story_type,created_at,updated_at,estimate,tasks");
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
             }
 
             Toast.makeText(getApplicationContext(), "Data loaded", Toast.LENGTH_LONG).show();
@@ -294,5 +317,39 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
         System.out.println(toReturn);
 
         return toReturn;
+    }
+
+    private void createTask() {
+        LinearLayout taskLayout = (LinearLayout) findViewById(R.id.subTaskLayout);
+        LinearLayout.LayoutParams descParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams submitParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        final EditText descriptionField = new EditText(this);
+        descriptionField.setLayoutParams(descParams);
+        descriptionField.setHint("Task description");
+
+        Button submitButton = new Button(this);
+        submitButton.setLayoutParams(submitParams);
+        submitButton.setText("Submit");
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitTask(descriptionField.getText().toString());
+            }
+        });
+
+        taskLayout.addView(descriptionField);
+        taskLayout.addView(submitButton);
+    }
+
+    private void submitTask(String description) {
+        try {
+            if(!description.isEmpty())
+                tracker.createTask(storyID, description);
+            else
+                Toast.makeText(this, "Please enter a task description", Toast.LENGTH_LONG).show();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 }

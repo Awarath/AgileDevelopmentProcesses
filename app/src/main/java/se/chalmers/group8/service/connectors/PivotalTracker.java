@@ -9,7 +9,6 @@ import java.net.URL;
 import se.chalmers.group8.communication.http.Connector;
 import se.chalmers.group8.communication.http.ConnectorResult;
 import se.chalmers.group8.communication.http.RequestPropertyPair;
-import se.chalmers.group8.service.connectors.UpdateFinish;
 
 
 /**

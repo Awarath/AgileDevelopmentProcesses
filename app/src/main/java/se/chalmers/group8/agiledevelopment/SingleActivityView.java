@@ -2,7 +2,6 @@ package se.chalmers.group8.agiledevelopment;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Layout;

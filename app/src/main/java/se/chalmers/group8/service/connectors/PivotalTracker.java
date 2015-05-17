@@ -24,6 +24,7 @@ public class PivotalTracker implements ConnectorResult {
     public static final int FUNCTION_DELETE = 0x03;
     public static final int FUNCTION_ADD_COMMENT = 0x04;
     public static final int FUNCTION_GET_MEMBERS = 0x05;
+    public static final int FUNCTION_CREATE_TASK = 0x06;
 
     private Connector connector;
 
@@ -113,6 +114,22 @@ public class PivotalTracker implements ConnectorResult {
     }
 
     /**
+     * Create a new task with the in the specified story with a description.
+     * @param storyID the story ID to which the task belong
+     * @param description the description of the task
+     * @throws MalformedURLException
+     */
+    public void createTask(String storyID, String description) throws MalformedURLException{
+        callFunction = FUNCTION_CREATE_TASK;
+        String tasksURL = storiesURL + storyID + "/tasks";
+        URL url = new URL(tasksURL);
+
+        String data = "{\"description\":" + "\"" + description + "\"" + "}";
+
+        connector.doHttpRequest(url, Connector.METHOD_POST, data, rpp);
+    }
+
+    /**
      * Reads all stories and gets the result in JSON format.
      *
      * @throws MalformedURLException
@@ -184,6 +201,20 @@ public class PivotalTracker implements ConnectorResult {
         URL url = new URL(storiesURL + storyID);
 
         connector.doHttpRequest(url, Connector.METHOD_PUT, data, rpp);
+    }
+
+    /**
+     * Updates the specified task's fields of the specified story using the specified data.
+     * Example: update("storyID", "taskID", "{\"description\":\"This is an updated description\"}"
+     *
+     * @param storyID the story ID
+     * @param taskID  the task ID
+     * @param data    specify both field and data that the field should be updated with
+     * @throws MalformedURLException
+     */
+    public void update(String storyID, String taskID, String data) throws MalformedURLException{
+        storyID += "/tasks/" + taskID;
+        update(storyID, data);
     }
 
     /**

@@ -27,7 +27,7 @@ public class PivotalTracker implements ConnectorResult {
     public static final int FUNCTION_ADD_COMMENT = 0x04;
     public static final int FUNCTION_GET_MEMBERS = 0x05;
     public static final int FUNCTION_LOGIN = 0x06;
-    public static final int FUNCTION_CREATE_TASK = 0x06;
+    public static final int FUNCTION_CREATE_TASK = 0x07;
 
     private Connector connector;
 

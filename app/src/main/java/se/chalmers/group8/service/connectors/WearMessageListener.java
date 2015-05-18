@@ -6,12 +6,17 @@ import android.widget.Toast;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
 
+import java.net.MalformedURLException;
+
 /**
  * Created by patrik on 2015-05-18.
  */
-public class WearMessageListener extends WearableListenerService implements UpdateFinish{
+public class WearMessageListener extends WearableListenerService{
 
     private static final String MESSAGE_PATH = "/start_activity";
+
+    private String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
+    private String projectID = "1330222";
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
@@ -32,7 +37,20 @@ public class WearMessageListener extends WearableListenerService implements Upda
         Log.d("Mobile", "Name: " + name);
         Log.d("Mobile", "Description: " + description);
 
+        PivotalTracker pt = new PivotalTracker(token, new UpdateFinish() {
+            @Override
+            public void onUpdateFinished(int callFunction, String result) {
 
+            }
+        });
+
+        pt.setProjectID(projectID);
+
+        try {
+            pt.create(name, description);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     private String parseBetween(String text, String startWord, String endWord) {
@@ -49,10 +67,5 @@ public class WearMessageListener extends WearableListenerService implements Upda
         if(beginIndex >= 0 && endIndex > 0)
             result = text.substring(beginIndex, endIndex);
         return result;
-    }
-
-    @Override
-    public void onUpdateFinished(int callFunction, String result) {
-
     }
 }

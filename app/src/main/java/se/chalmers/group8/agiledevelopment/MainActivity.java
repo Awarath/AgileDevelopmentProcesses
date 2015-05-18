@@ -12,7 +12,7 @@ import android.support.v7.widget.Toolbar;
 
 import java.net.MalformedURLException;
 
-import se.chalmers.group8.service.connectors.PivotalTracker;
+import se.chalmers.group8.service.connectors.WearMessageListener;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -31,7 +31,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        startService(new Intent(this, WearMessageListener.class));
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);

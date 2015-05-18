@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 
+
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    compileSdkVersion 22
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "se.chalmers.group8.agiledevelopment"
-        minSdkVersion 15
-        targetSdkVersion 21
+        minSdkVersion 20
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -21,8 +22,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:support-v4:21.0.3'
-    wearApp project(':wear')
-    compile 'com.google.android.gms:play-services:7.3.0'
+    compile 'com.google.android.support:wearable:1.1.0'
+    compile 'com.google.android.gms:play-services-wearable:7.3.0'
 }

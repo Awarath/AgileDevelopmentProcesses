@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import se.chalmers.group8.entities.Member;
 import se.chalmers.group8.service.connectors.PivotalTracker;
 import se.chalmers.group8.service.connectors.UpdateFinish;
+import se.chalmers.group8.session.PivotalSession;
 
 
 public class SingleActivityView extends ActionBarActivity implements UpdateFinish {
@@ -49,7 +50,7 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
         storyID = intent.getStringExtra("intent_id");
         projID = intent.getStringExtra("intent_project_id");
 
-        String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
+        String token = PivotalSession.getInstance().getToken();
 
         tracker = new PivotalTracker(token, this);
         tracker.setProjectID("1330222");
@@ -159,7 +160,7 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
                 spinner.setSelection(adapter.getPosition(estimate));
 
                 // New request for members
-                String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
+                String token = PivotalSession.getInstance().getToken();
 
                 PivotalTracker tracker = new PivotalTracker(token, this);
                 tracker.setProjectID("1330222");
@@ -223,7 +224,7 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
     }
 
     public void submitChanges(View view) {
-        String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
+        String token = PivotalSession.getInstance().getToken();
 
         PivotalTracker tracker = new PivotalTracker(token, this);
         tracker.setProjectID(projID);

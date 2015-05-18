@@ -137,8 +137,8 @@ public class SettingsActivity extends ActionBarActivity implements UpdateFinish 
                 PivotalSession pivotalSession = PivotalSession.getInstance();
                 pivotalSession.setSession(object.getString("username"), object.getString("api_token"));
 
-                Toast.makeText(getApplicationContext(), "successfully logged in as " + object.getString("username"), Toast.LENGTH_SHORT).show();
-                finish();
+                Toast.makeText(getApplicationContext(), "successfully logged in as " +
+                        object.getString("username"), Toast.LENGTH_SHORT).show();
 
             } catch (JSONException e) {
                 e.printStackTrace();

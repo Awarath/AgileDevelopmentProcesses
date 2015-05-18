@@ -3,6 +3,7 @@ package se.chalmers.group8.agiledevelopment;
 /**
  * Created by nattapon on 28/04/15.
  */
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,10 +35,10 @@ public class Tab3 extends Fragment implements UpdateFinish {
         v =inflater.inflate(R.layout.tab_3,container,false);
 
         PivotalSession session = PivotalSession.getInstance();
-        if(session.getStatus().equals("loggedIn")) {
+        if(session.getStatus().equals("loggedIn") && !session.getProjectID().equals("")) {
 
             PivotalTracker tracker = new PivotalTracker(session.getToken(), this);
-            tracker.setProjectID("1330222");
+            tracker.setProjectID(session.getProjectID());
             try {
                 tracker.readAllStories();
 
@@ -44,6 +46,7 @@ public class Tab3 extends Fragment implements UpdateFinish {
                 e.printStackTrace();
             }
         } else {
+
             LinearLayout ll = (LinearLayout) v.findViewById(R.id.buttonLayout);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
                     (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);

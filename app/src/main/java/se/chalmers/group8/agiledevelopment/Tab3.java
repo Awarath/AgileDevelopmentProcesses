@@ -29,6 +29,7 @@ import se.chalmers.group8.session.PivotalSession;
 public class Tab3 extends Fragment implements UpdateFinish {
 
     View v;
+    String project;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class Tab3 extends Fragment implements UpdateFinish {
         PivotalSession session = PivotalSession.getInstance();
         if(session.getStatus().equals("loggedIn") && !session.getProjectID().equals("")) {
 
+            project = session.getProjectID();
             PivotalTracker tracker = new PivotalTracker(session.getToken(), this);
             tracker.setProjectID(session.getProjectID());
             try {
@@ -86,7 +88,7 @@ public class Tab3 extends Fragment implements UpdateFinish {
                 newButton.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         intent.putExtra("intent_id", id);
-                        intent.putExtra("intent_project_id", "1330222");
+                        intent.putExtra("intent_project_id", project);
                         startActivity(intent);
                     }
                 });

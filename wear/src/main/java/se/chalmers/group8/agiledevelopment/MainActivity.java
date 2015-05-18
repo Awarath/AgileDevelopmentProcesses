@@ -95,8 +95,8 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
 
     @Override
     public void onConnected(Bundle bundle) {
-        sendMessage(MESSAGE_PATH, "Hej");
-        //displaySpeechRecognizer();
+        //sendMessage(MESSAGE_PATH, "Hej");
+        displaySpeechRecognizer();
     }
 
     @Override

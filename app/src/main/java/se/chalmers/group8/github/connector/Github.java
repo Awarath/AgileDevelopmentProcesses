@@ -6,32 +6,35 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import se.chalmers.group8.communication.http.Connector;
 import se.chalmers.group8.communication.http.ConnectorResult;
-import se.chalmers.group8.communication.http.RequestPropertyPair;
 
 /**
- * Created by patrik on 2015-05-12.
+ * This class get data from Github.
  */
+
 public class Github implements ConnectorResult {
 
     private Connector connector;
 
-    private String githubToken;
-
     public Github() {
+
         connector = new Connector(this);
-        githubToken = "6e147c4e65becda449822491241aab2d31cc1bdf";
+
     }
 
     public void getRequest() {
-        //RequestPropertyPair rpp = new RequestPropertyPair()
 
         try {
-            URL branchesURL = new URL("https://api.github.com/repos/Awarath/AgileDevelopmentProcesses/branches");
-            URL commitsURL = new URL("https://api.github.com/repos/Awarath/AgileDevelopmentProcesses/commits/fbfcfc1fe4080528228a37eb52ed491f58ce3b6c");
-            connector.doHttpRequest(commitsURL, Connector.METHOD_GET);
+
+            //URL branchesURL = new URL("https://api.github.com/repos/Awarath/AgileDevelopmentProcesses/branches");
+            URL branchesURL = new URL(DataProcessor.createdURL);
+
+            connector.doHttpRequest(branchesURL, Connector.METHOD_GET);
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -40,37 +43,45 @@ public class Github implements ConnectorResult {
     @Override
     public void onConnectorResult(String result) {
 
-        /*try { For parsing the branches
+        //For parsing the branches
+        try {
+
             JSONArray array = new JSONArray(result);
+
+            List shaList = new ArrayList();
+            List nameList = new ArrayList();
+
+            //Parsing branch name and its sha
             for(int i = 0; i < array.length(); i++) {
+
                 JSONObject obj = array.getJSONObject(i);
                 JSONObject commit = obj.getJSONObject("commit");
                 String sha = commit.getString("sha");
-                System.out.println(sha);
+                String name = obj.getString("name");
+                shaList.add(i, sha);
+                nameList.add(i, name);
+
             }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
+            //Parsing details of each sha
+            for (int j = 0; j < shaList.size(); j++) {
 
+                //Store sha into a list
+                DataProcessor.setSha(shaList.get(j).toString());
 
-        // For parsing the commits
-        try {
-            JSONObject jsonResult = new JSONObject(result);
-            JSONObject commit = jsonResult.getJSONObject("commit");
-            JSONObject committer = commit.getJSONObject("committer");
-            String name = committer.getString("name");
-            String time = committer.getString("date");
-            String message = commit.getString("message");
+                //Store branch into a list
+                DataProcessor.setBranchName(nameList.get(j).toString());
 
-            System.out.println("Name:" + name);
-            System.out.println("Time:" + time);
-            System.out.println("Message:" + message);
+                //Parsing details of a sha
+                ParseSha parseSha = new ParseSha();
+                parseSha.getRequest();
+
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
     }
+
 }

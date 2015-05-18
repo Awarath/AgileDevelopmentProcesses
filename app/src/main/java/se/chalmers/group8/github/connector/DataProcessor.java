@@ -61,9 +61,9 @@ public class DataProcessor {
 
     public static void compareList(String sha) {
         if(shaList.contains(sha)) {
-            System.out.println("The branch" + nameList.get(branchIndex) +  "is not changed!!!");
+            System.out.println("The branch" + nameList.get(branchIndex) +  " is not changed!!!");
         } else {
-            System.out.println("The branch" + nameList.get(branchIndex) + "is changed!!!");
+            System.out.println("The branch" + nameList.get(branchIndex) + " is changed!!!");
             shaList.set(branchIndex, sha);
         }
 

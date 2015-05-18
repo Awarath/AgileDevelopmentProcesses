@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.Timer;
 
@@ -25,17 +26,21 @@ public class Tab2 extends Fragment {
         View v =inflater.inflate(R.layout.tab_2,container,false);
 
         //Need to take input later, need to take input from user
-        final String userName = "Awarath";
-        final String repositoryName = "AgileDevelopmentProcesses";
+        //final String userName = "Awarath";
+        //final String repositoryName = "AgileDevelopmentProcesses";
+        final EditText editText_User = (EditText) v.findViewById(R.id.edit_text_user);
+        final EditText editText_Repo = (EditText) v.findViewById(R.id.edit_text_repo);
 
         //Button for starting Github connection
         Button githubButton = (Button) v.findViewById(R.id.GithubButton);
         githubButton.setOnClickListener(new Button.OnClickListener() {
 
-            //String userName = R.id.edit_text_user.getText().toString();
-            //String repositoryName;
 
             public void onClick(View v) {
+
+                String userName = editText_User.getText().toString();
+                String repositoryName = editText_Repo.getText().toString();
+
 
                 //The link to parse
                 //CreateURL.setBranchURL("https://api.github.com/repos/Awarath/AgileDevelopmentProcesses/branches");

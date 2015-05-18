@@ -76,7 +76,7 @@ public class allStoriesActivity extends ActionBarActivity implements UpdateFinis
     }
 
     @Override
-    public void onUpdateFinished(String result) {
+    public void onUpdateFinished(int call, String result) {
 
         try {
             JSONArray obj = new JSONArray(result);

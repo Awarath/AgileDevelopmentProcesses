@@ -30,6 +30,8 @@ import se.chalmers.group8.session.PivotalSession;
 
 public class SettingsActivity extends ActionBarActivity implements UpdateFinish {
 
+    String tempProjId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,10 @@ public class SettingsActivity extends ActionBarActivity implements UpdateFinish 
             userNameText.setText(savedData[0]);
             passwordText.setText(savedData[1]);
         }
+
+        String savedID = readFromFile("id.txt");
+        EditText storyIdText = (EditText)findViewById(R.id.storyID);
+        storyIdText.setText(savedID);
     }
 
     @Override
@@ -74,6 +80,11 @@ public class SettingsActivity extends ActionBarActivity implements UpdateFinish 
         handleLogin(userNameText.getText().toString(), passwordText.getText().toString());
     }
 
+    public void storyIdButtonClicked(View view){
+        EditText storyIdText = (EditText)findViewById(R.id.storyID);
+        setStoryId(storyIdText.getText().toString());
+    }
+
     public boolean handleLogin(String username, String password) {
 
         PivotalSession session = PivotalSession.getInstance();
@@ -94,23 +105,57 @@ public class SettingsActivity extends ActionBarActivity implements UpdateFinish 
         return true;
     }
 
+    public boolean setStoryId(String projectID){
+
+        PivotalSession session = PivotalSession.getInstance();
+        if (session.getStatus().equals("loggedIn")) {
+            PivotalTracker tracker = new PivotalTracker(session.getToken(), this);
+            try {
+                tempProjId = projectID;
+                tracker.setProjectID(projectID);
+                tracker.readAllStories();
+                return true;
+            }catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "You have to log in first", Toast.LENGTH_SHORT).show();
+        }
+
+        return false;
+    }
+
         @Override
     public void onUpdateFinished(int callFunction, String result) {
-        System.out.println(result);
+        System.out.println("Result: " + result);
 
-        try {
+        if (callFunction == PivotalTracker.FUNCTION_LOGIN) {
+            try {
 
-            JSONObject object = new JSONObject(result);
+                JSONObject object = new JSONObject(result);
 
-            PivotalSession pivotalSession = PivotalSession.getInstance();
-            pivotalSession.setSession(object.getString("username"), object.getString("api_token"));
+                PivotalSession pivotalSession = PivotalSession.getInstance();
+                pivotalSession.setSession(object.getString("username"), object.getString("api_token"));
 
-            Toast.makeText(getApplicationContext(), "successfully logged in as " + object.getString("username"), Toast.LENGTH_SHORT).show();
-            finish();
+                Toast.makeText(getApplicationContext(), "successfully logged in as " + object.getString("username"), Toast.LENGTH_SHORT).show();
+                finish();
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Could not log in", Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Could not log in", Toast.LENGTH_SHORT).show();
+            }
+        } else if (callFunction == PivotalTracker.FUNCTION_READ) {
+            if (result.equals("")) {
+                Toast.makeText(getApplicationContext(), "Invalid story id", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                PivotalSession session = PivotalSession.getInstance();
+                session.setProjectID(tempProjId);
+
+                writeToFile(tempProjId, "id.txt");
+                Toast.makeText(getApplicationContext(), "Project id set", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 

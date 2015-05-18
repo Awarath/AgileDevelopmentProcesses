@@ -9,27 +9,28 @@ public class PivotalSession {
     private String userName;
     private String token;
     private String status;
+    private String projectID;
 
     public static PivotalSession getInstance() {
         return ourInstance;
     }
 
     private PivotalSession() {
-        setUserName("");
-        setToken("");
-        setStatus("notLoggedIn");
+        destroySession();
     }
 
     public void destroySession(){
         setUserName("");
         setToken("");
         setStatus("notLoggedIn");
+        setProjectID("");
     }
 
     public void setSession(String userName, String token) {
         setUserName(userName);
         setToken(token);
         setStatus("loggedIn");
+        setProjectID("");
     }
 
     public String getUserName() {
@@ -54,5 +55,13 @@ public class PivotalSession {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(String projectID) {
+        this.projectID = projectID;
     }
 }

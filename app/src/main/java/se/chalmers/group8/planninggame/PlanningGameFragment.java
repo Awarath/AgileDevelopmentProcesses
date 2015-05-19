@@ -50,6 +50,7 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
     private String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
     private String projectID = "1330222";
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -66,6 +67,7 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
         ptCommenter.setProjectID(projectID);
 
         createStoryNameButtons();
+
 
         return fragmentView;
 
@@ -90,7 +92,7 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
         button.setText(storyName);
         button.setBackgroundColor(Color.TRANSPARENT);
 
-        final GlowButton storyButton = new GlowButton(button, R.drawable.list_selection, 0);
+        final GlowButton storyButton = new GlowButton(button, R.drawable.pg_buttonframe_copy, 0);
         storyButtons.add(storyButton);
 
         storyButton.setOnClickListener(new View.OnClickListener() {
@@ -199,7 +201,7 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
         /**********************************/
     }
 
-    
+
 
 
 

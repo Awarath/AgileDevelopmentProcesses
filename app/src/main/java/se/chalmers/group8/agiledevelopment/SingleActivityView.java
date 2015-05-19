@@ -107,6 +107,8 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
                         (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
+
+
                 System.out.println(result);
 
                 final String id = object.getString("id");
@@ -325,11 +327,11 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
 
         final EditText descriptionField = new EditText(this);
         descriptionField.setLayoutParams(descParams);
-        descriptionField.setHint("Task description");
+        descriptionField.setHint("Enter task description");
 
         Button submitButton = new Button(this);
         submitButton.setLayoutParams(submitParams);
-        submitButton.setText("Add task");
+        submitButton.setText("ADD TASK");
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

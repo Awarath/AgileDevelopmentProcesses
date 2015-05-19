@@ -1,6 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="se.chalmers.group8.agiledevelopment.SingleActivityView"
@@ -22,34 +21,44 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:id="@+id/singleActivityBackground">
+            android:id="@+id/singleActivityBackground"
+            android:padding="10dp">
 
             // Name
 
-            <TextView android:text="name"
-                android:layout_width="wrap_content"
+            <TextView android:text="NAME"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/storyName"/>
+                android:id="@+id/storyName"
+                android:background="@drawable/custom_label"
+                android:textColor="#ffffff"
+                android:layout_marginTop="5dp"
+                android:elevation="3dp"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:id="@+id/storyNameText"
                 android:layout_toRightOf="@+id/storyName"/>
 
             // Description
 
-            <TextView android:text="description"
-                android:layout_width="wrap_content"
+            <TextView android:text="DESCRIPTION"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/storyDescription"
-                android:layout_below="@+id/storyName"/>
+                android:layout_below="@+id/storyName"
+                android:background="@drawable/custom_label"
+                android:textColor="#ffffff"
+                android:layout_marginTop="5dp"
+                android:elevation="3dp"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/storyDescriptionText"
+                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/storyDescription"
                 android:layout_below="@+id/storyNameText"/>
 
@@ -83,39 +92,55 @@
 
             // Status
 
-            <TextView android:text="status"
-                android:layout_width="wrap_content"
+            <TextView android:text="STATUS"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/status"/>
+                android:id="@+id/status"
+                android:background="@drawable/custom_label"
+                android:textColor="#ffffff"
+                android:layout_marginTop="5dp"
+                android:elevation="3dp"/>
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/statusText"/>
+                android:id="@+id/statusText"
+                android:layout_margin="5dp"/>
 
             // Story type
 
-            <TextView android:text="story type"
-                android:layout_width="wrap_content"
+            <TextView android:text="STORY TYPE"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/storyType"/>
+                android:id="@+id/storyType"
+                android:background="@drawable/custom_label"
+                android:textColor="#ffffff"
+                android:layout_marginTop="5dp"
+                android:elevation="3dp"/>
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/storyTypeText"/>
+                android:id="@+id/storyTypeText"
+                android:layout_margin="5dp"
+                />
 
             // Points
 
-            <TextView android:text="points"
-                android:layout_width="wrap_content"
+            <TextView android:text="POINTS"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/points"/>
+                android:id="@+id/points"
+                android:background="@drawable/custom_label"
+                android:textColor="#ffffff"
+                android:layout_marginTop="5dp"
+                android:elevation="3dp"/>
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/pointsText"/>
+                android:id="@+id/pointsText"
+                android:layout_margin="5dp"/>
 
 
             <Button
@@ -123,19 +148,26 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/submitButton"
                 android:onClick="submitChanges"
-                android:text="submit"
+                android:text="submit changes"
                 android:layout_centerInParent="true"
-                android:elegantTextHeight="false" />
+                android:elegantTextHeight="false"
+                android:background="@drawable/button"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp" />
 
             // Sub tasks
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginBottom="5dp"
-                android:text="Sub tasks"
-                android:textSize="20dp"/>
+                android:text="SUB TASKS"
+                android:background="@drawable/custom_label"
+                android:textColor="#ffffff"
+                android:elevation="3dp"/>
 
            <LinearLayout
                android:layout_width="wrap_content"
@@ -150,6 +182,7 @@
                 android:layout_height="65dp"
                 android:src="@drawable/addbutton"
                 android:layout_margin="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_gravity="end|bottom"
                 android:id="@+id/addSubTaskButton"/>
         </LinearLayout>

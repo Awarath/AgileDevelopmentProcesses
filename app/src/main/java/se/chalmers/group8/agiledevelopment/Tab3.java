@@ -29,7 +29,7 @@ public class Tab3 extends Fragment implements UpdateFinish {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v =inflater.inflate(R.layout.tab_3,container,false);
+        v =inflater.inflate(R.layout.activity_all_stories,container,false);
 
         String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
 

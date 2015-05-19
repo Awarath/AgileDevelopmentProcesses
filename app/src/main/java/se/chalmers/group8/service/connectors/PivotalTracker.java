@@ -1,5 +1,7 @@
 package se.chalmers.group8.service.connectors;
 
+import android.util.Base64;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,6 +11,7 @@ import java.net.URL;
 import se.chalmers.group8.communication.http.Connector;
 import se.chalmers.group8.communication.http.ConnectorResult;
 import se.chalmers.group8.communication.http.RequestPropertyPair;
+import se.chalmers.group8.service.connectors.UpdateFinish;
 
 
 /**
@@ -23,7 +26,8 @@ public class PivotalTracker implements ConnectorResult {
     public static final int FUNCTION_DELETE = 0x03;
     public static final int FUNCTION_ADD_COMMENT = 0x04;
     public static final int FUNCTION_GET_MEMBERS = 0x05;
-    public static final int FUNCTION_CREATE_TASK = 0x06;
+    public static final int FUNCTION_LOGIN = 0x06;
+    public static final int FUNCTION_CREATE_TASK = 0x07;
 
     private Connector connector;
 
@@ -69,6 +73,11 @@ public class PivotalTracker implements ConnectorResult {
         rpp[1] = new RequestPropertyPair("Content-Type", "application/json");
 
         initUserProfile();
+    }
+
+    public PivotalTracker(UpdateFinish updateFinish) {
+        this.updateFinish = updateFinish;
+        connector = new Connector(this);
     }
 
     private void initUserProfile() {
@@ -253,6 +262,25 @@ public class PivotalTracker implements ConnectorResult {
         URL url = new URL(membersURL);
 
         connector.doHttpRequest(url, Connector.METHOD_GET, rpp);
+    }
+
+    public void login(String username, String password) throws MalformedURLException {
+        callFunction = FUNCTION_LOGIN;
+
+        System.out.println(username);
+        System.out.println(password);
+
+        String authString = username + ":" + password;
+        byte[] authEncBytes = Base64.encode(authString.getBytes(), Base64.DEFAULT);
+        String authStringEnc = new String(authEncBytes);
+        System.out.println("Base64 encoded auth string: " + authStringEnc);
+
+        RequestPropertyPair[] loginRPPrpp = new RequestPropertyPair[2];
+        loginRPPrpp[0] = new RequestPropertyPair("Authorization", "Basic "+authStringEnc);
+        loginRPPrpp[1] = new RequestPropertyPair("Content-Type", "application/json");
+
+        URL url = new URL("https://www.pivotaltracker.com/services/v5/me");
+        connector.doHttpRequest(url, Connector.METHOD_GET, loginRPPrpp);
     }
 
     /**

@@ -329,7 +329,7 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
 
         Button submitButton = new Button(this);
         submitButton.setLayoutParams(submitParams);
-        submitButton.setText("Submit");
+        submitButton.setText("Add task");
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

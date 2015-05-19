@@ -2,10 +2,10 @@
 <resources>
 
     <!-- status bar -->
-    <color name="ColorPrimaryDark">#000000</color>
+    <color name="ColorPrimaryDark">#303F9F</color>
 
     <!-- app bar -->
-    <color name="ColorPrimary">#374678</color>
+    <color name="ColorPrimary">#3F51B5</color>
 
     <!-- tab selected -->
     <color name="tabsScrollColor">#E64A19</color>
@@ -19,7 +19,6 @@
     <!-- splashscreen BG color -->
     <color name="bgColor">#374678</color>
 
-    <!-- text color for Splash Screen -->
-    <color name="textColorS">#FF80AB</color>
+
 
 </resources>

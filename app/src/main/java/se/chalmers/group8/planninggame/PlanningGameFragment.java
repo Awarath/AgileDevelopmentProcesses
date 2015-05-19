@@ -90,7 +90,7 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
         button.setText(storyName);
         button.setBackgroundColor(Color.TRANSPARENT);
 
-        final GlowButton storyButton = new GlowButton(button, R.drawable.pg_buttonframe, 0);
+        final GlowButton storyButton = new GlowButton(button, R.drawable.list_selection, 0);
         storyButtons.add(storyButton);
 
         storyButton.setOnClickListener(new View.OnClickListener() {
@@ -198,6 +198,10 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
 
         /**********************************/
     }
+
+    
+
+
 
     public void initPopup() {
         LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -27,6 +27,10 @@
                 android:name=".SingleActivityView"
                 android:label="Single activity view" >
         </activity>
+        <activity
+            android:name=".CreateOutputView"
+            android:label="Create Output view" >
+        </activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 

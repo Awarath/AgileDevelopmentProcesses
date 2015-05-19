@@ -3,6 +3,7 @@ package se.chalmers.group8.agiledevelopment;
 /**
  * Created by nattapon on 28/04/15.
  */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -47,6 +48,7 @@ public class Tab3 extends Fragment implements UpdateFinish {
 
     @Override
     public void onUpdateFinished(int callFinish, String result) {
+
         try {
             JSONArray obj = new JSONArray(result);
             System.out.println(obj.length());

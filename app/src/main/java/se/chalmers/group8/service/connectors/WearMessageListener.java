@@ -24,19 +24,16 @@ public class WearMessageListener extends WearableListenerService{
             String message = new String(messageEvent.getData());
             String name = parseBetween(message, "name", " and");
             String description = parseBetween(message, "description", "");
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-            Log.d("Mobile", message);
 
             if(name.length() > 0 && description.length() > 0) // If input was said correctly
                 createNewStory(name, description);
+            else
+                Toast.makeText(this, "Please say the phrase in a correct way", Toast.LENGTH_LONG).show();
         } else
             super.onMessageReceived(messageEvent);
     }
 
     private void createNewStory(String name, String description) {
-        Log.d("Mobile", "Name: " + name);
-        Log.d("Mobile", "Description: " + description);
-
         PivotalTracker pt = new PivotalTracker(token, new UpdateFinish() {
             @Override
             public void onUpdateFinished(int callFunction, String result) {

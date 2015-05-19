@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -96,11 +98,14 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
     @Override
     public void onConnected(Bundle bundle) {
         //sendMessage(MESSAGE_PATH, "Hej");
-        displaySpeechRecognizer();
     }
 
     @Override
     public void onConnectionSuspended(int i) {
 
+    }
+
+    public void onLogoClick(View view) {
+        displaySpeechRecognizer();
     }
 }

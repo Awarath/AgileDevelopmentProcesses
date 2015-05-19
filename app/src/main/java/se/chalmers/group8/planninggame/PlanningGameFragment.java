@@ -1,5 +1,6 @@
 package se.chalmers.group8.planninggame;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
@@ -24,8 +25,10 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import se.chalmers.group8.agiledevelopment.R;
+import se.chalmers.group8.agiledevelopment.SettingsActivity;
 import se.chalmers.group8.service.connectors.PivotalTracker;
 import se.chalmers.group8.service.connectors.UpdateFinish;
+import se.chalmers.group8.session.PivotalSession;
 
 /**
  * Created by patrik on 2015-05-04.
@@ -47,26 +50,45 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
     private int     storyVoteTotal;
     private int     storyNumberOfVotes;
 
-    private String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
-    private String projectID = "1330222";
+    private String token = PivotalSession.getInstance().getToken();
+    private String projectID = PivotalSession.getInstance().getProjectID();
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         fragmentView = inflater.inflate(R.layout.planning_game, container, false);
-        initVoteButtons(fragmentView);
-        initPopup();
 
-        storyButtons = new ArrayList<GlowButton>();
+        PivotalSession session = PivotalSession.getInstance();
+        if (session.getStatus().equals("loggedIn") && !session.getProjectID().equals("")) {
+            initVoteButtons(fragmentView);
+            initPopup();
 
-        pt = new PivotalTracker(token, this);
-        pt.setProjectID(projectID);
+            storyButtons = new ArrayList<GlowButton>();
 
-        ptCommenter = new PivotalTracker(token, this);
-        ptCommenter.setProjectID(projectID);
+            pt = new PivotalTracker(token, this);
+            pt.setProjectID(projectID);
 
-        createStoryNameButtons();
+            ptCommenter = new PivotalTracker(token, this);
+            ptCommenter.setProjectID(projectID);
+
+            createStoryNameButtons();
+        }else {
+
+            LinearLayout ll = (LinearLayout) fragmentView.findViewById(R.id.storyNameButtonLayout);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
+                    (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            Button newButton = new Button(getActivity());
+            newButton.setText("Login");
+            final Intent intent = new Intent(getActivity(), SettingsActivity.class);
+            newButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    startActivity(intent);
+                }
+            });
+            ll.addView(newButton, lp);
+        }
 
 
         return fragmentView;

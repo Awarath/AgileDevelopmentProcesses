@@ -1,6 +1,6 @@
 package se.chalmers.group8.planninggame;
 
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -31,6 +31,7 @@ import se.chalmers.group8.service.connectors.UpdateFinish;
  * Created by patrik on 2015-05-04.
  */
 public class PlanningGameFragment extends Fragment implements UpdateFinish {
+
     private PivotalTracker pt;
     private PivotalTracker ptCommenter;
 
@@ -72,19 +73,16 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
     }
 
     private void createStoryNameButtons() {
-        if(getActivity() != null) {
-            try {
-                pt.readAllStories("id,name,description,comments");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+        try {
+            pt.readAllStories("id,name,description,comments");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
     }
 
     private void addStoryNameButtons(final String id, final String storyName, final String storyDescription, final int totalVoteValue, final int numberOfVotes) {
         final LinearLayout storyNameButtonLayout = (LinearLayout) fragmentView.findViewById(R.id.storyNameButtonLayout);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
 
         Button button = new Button(getActivity());
         button.setText(storyName);
@@ -248,20 +246,20 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
                             if(text.substring(0, text.length()-1).equals("VOTE:")) {
                                 // A user can only vote once on a story!
                                 if(personID.equals(pt.getUserID())) {
-                                    hasVoted = true;
-                                    break;
+                                   hasVoted = true;
+                                  break;
                                 } else {
-                                    // Votes look like i.e "VOTE:1"
-                                    int voteValue = Integer.parseInt(text.substring(text.length()-1));
-                                    totalVoteValue += voteValue;
-                                    numberOfVotes++;
+                                // Votes look like i.e "VOTE:1"
+                                int voteValue = Integer.parseInt(text.substring(text.length()-1));
+                                totalVoteValue += voteValue;
+                                numberOfVotes++;
                                 }
 
                             }
 
                         }
 
-                        if(!hasVoted && getActivity() != null)
+                        if(!hasVoted)
                             addStoryNameButtons(storyID, name, description, totalVoteValue, numberOfVotes);
                     }
 
@@ -276,9 +274,7 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
                 // Update Buttons!
                 LinearLayout storyNameButtonLayout = (LinearLayout)fragmentView.findViewById(R.id.storyNameButtonLayout);
                 storyNameButtonLayout.removeAllViews();
-
                 createStoryNameButtons();
-
                 updateGlow(voteButtons, voteButtons.get(selectedPriority-1));
 
                 selectedPriority = -1;

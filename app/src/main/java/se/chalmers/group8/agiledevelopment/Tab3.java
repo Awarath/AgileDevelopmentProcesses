@@ -3,7 +3,7 @@ package se.chalmers.group8.agiledevelopment;
 /**
  * Created by nattapon on 28/04/15.
  */
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,25 +23,45 @@ import java.net.MalformedURLException;
 
 import se.chalmers.group8.service.connectors.PivotalTracker;
 import se.chalmers.group8.service.connectors.UpdateFinish;
+import se.chalmers.group8.session.PivotalSession;
 
 
 public class Tab3 extends Fragment implements UpdateFinish {
 
     View v;
+    String project;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v =inflater.inflate(R.layout.tab_3,container,false);
+        v =inflater.inflate(R.layout.activity_all_stories,container,false);
 
-        String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
+        PivotalSession session = PivotalSession.getInstance();
+        if(session.getStatus().equals("loggedIn") && !session.getProjectID().equals("")) {
 
-        PivotalTracker tracker = new PivotalTracker(token, this);
-        tracker.setProjectID("1330222");
-        try {
-            tracker.readAllStories();
+            project = session.getProjectID();
+            PivotalTracker tracker = new PivotalTracker(session.getToken(), this);
+            tracker.setProjectID(session.getProjectID());
+            try {
+                tracker.readAllStories();
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        } else {
+
+            LinearLayout ll = (LinearLayout) v.findViewById(R.id.buttonLayout);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
+                    (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            Button newButton = new Button(getActivity());
+            newButton.setText("Login");
+            final Intent intent = new Intent(getActivity(), SettingsActivity.class);
+            newButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    startActivity(intent);
+                }
+            });
+            ll.addView(newButton, lp);
         }
 
         return v;
@@ -48,7 +69,6 @@ public class Tab3 extends Fragment implements UpdateFinish {
 
     @Override
     public void onUpdateFinished(int callFinish, String result) {
-
         try {
             JSONArray obj = new JSONArray(result);
             System.out.println(obj.length());
@@ -68,7 +88,7 @@ public class Tab3 extends Fragment implements UpdateFinish {
                 newButton.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         intent.putExtra("intent_id", id);
-                        intent.putExtra("intent_project_id", "1330222");
+                        intent.putExtra("intent_project_id", project);
                         startActivity(intent);
                     }
                 });

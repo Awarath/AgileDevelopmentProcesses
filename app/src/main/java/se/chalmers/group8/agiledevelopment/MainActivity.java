@@ -1,11 +1,19 @@
 package se.chalmers.group8.agiledevelopment;
 
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+import android.content.Intent;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+
+import java.net.MalformedURLException;
+
+import se.chalmers.group8.service.connectors.PivotalTracker;
+import se.chalmers.group8.session.PivotalSession;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -70,6 +78,18 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            final Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        else if (id == R.id.action_logout) {
+            PivotalSession pivotalSession = PivotalSession.getInstance();
+            if (pivotalSession.getStatus().equals("notLoggedIn")) {
+                Toast.makeText(getApplicationContext(), "You are not logged in", Toast.LENGTH_SHORT).show();
+            } else {
+                pivotalSession.destroySession();
+                Toast.makeText(getApplicationContext(), "Successfully logged out", Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
 

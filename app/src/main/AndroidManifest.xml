@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="se.chalmers.group8.agiledevelopment" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic"
@@ -25,13 +27,21 @@
 
         <activity
                 android:name=".SingleActivityView"
-                android:label="Single activity view" >
+                android:label="Single activity view"
+                android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="se.chalmers.group8.agiledevelopment.MainActivity" />
         </activity>
         <activity
             android:name=".CreateOutputView"
             android:label="Create Output view" >
         </activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

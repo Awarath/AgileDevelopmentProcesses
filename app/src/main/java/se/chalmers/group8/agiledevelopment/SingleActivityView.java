@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import se.chalmers.group8.entities.Member;
 import se.chalmers.group8.service.connectors.PivotalTracker;
 import se.chalmers.group8.service.connectors.UpdateFinish;
+import se.chalmers.group8.session.PivotalSession;
 
 
 public class SingleActivityView extends ActionBarActivity implements UpdateFinish {
@@ -49,7 +50,7 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
         storyID = intent.getStringExtra("intent_id");
         projID = intent.getStringExtra("intent_project_id");
 
-        String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
+        String token = PivotalSession.getInstance().getToken();
 
         tracker = new PivotalTracker(token, this);
         tracker.setProjectID("1330222");
@@ -107,6 +108,8 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
                         (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
+
+
                 System.out.println(result);
 
                 final String id = object.getString("id");
@@ -159,7 +162,7 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
                 spinner.setSelection(adapter.getPosition(estimate));
 
                 // New request for members
-                String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
+                String token = PivotalSession.getInstance().getToken();
 
                 PivotalTracker tracker = new PivotalTracker(token, this);
                 tracker.setProjectID("1330222");
@@ -223,7 +226,7 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
     }
 
     public void submitChanges(View view) {
-        String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
+        String token = PivotalSession.getInstance().getToken();
 
         PivotalTracker tracker = new PivotalTracker(token, this);
         tracker.setProjectID(projID);
@@ -325,11 +328,11 @@ public class SingleActivityView extends ActionBarActivity implements UpdateFinis
 
         final EditText descriptionField = new EditText(this);
         descriptionField.setLayoutParams(descParams);
-        descriptionField.setHint("Task description");
+        descriptionField.setHint("Enter task description");
 
         Button submitButton = new Button(this);
         submitButton.setLayoutParams(submitParams);
-        submitButton.setText("Submit");
+        submitButton.setText("ADD TASK");
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -8,6 +8,8 @@ import com.google.android.gms.wearable.WearableListenerService;
 
 import java.net.MalformedURLException;
 
+import se.chalmers.group8.session.PivotalSession;
+
 /**
  * Created by patrik on 2015-05-18.
  */
@@ -15,17 +17,23 @@ public class WearMessageListener extends WearableListenerService{
 
     private static final String MESSAGE_PATH = "/start_activity";
 
-    private String token = "b33f5efe7f296d2bf724f2d3a20bb8b1";
-    private String projectID = "1330222";
+    private String token;
+    private String projectID;
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
         if(messageEvent.getPath().equals(MESSAGE_PATH)){
+
+            PivotalSession pivotalSession = PivotalSession.getInstance();
+            token = pivotalSession.getToken();
+            projectID = pivotalSession.getProjectID();
+
             String message = new String(messageEvent.getData());
             String name = parseBetween(message, "name", " and");
             String description = parseBetween(message, "description", "");
 
-            if(name.length() > 0 && description.length() > 0) // If input was said correctly
+            if(pivotalSession.getStatus().equals("loggedIn") && name.length() > 0
+                    && description.length() > 0) // If input was said correctly
                 createNewStory(name, description);
             else
                 Toast.makeText(this, "Please say the phrase in a correct way", Toast.LENGTH_LONG).show();

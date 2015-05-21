@@ -53,6 +53,7 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
     private String token = PivotalSession.getInstance().getToken();
     private String projectID = PivotalSession.getInstance().getProjectID();
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -89,6 +90,7 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
             ll.addView(newButton, lp);
         }
 
+
         return fragmentView;
 
     }
@@ -112,7 +114,7 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
         button.setText(storyName);
         button.setBackgroundColor(Color.TRANSPARENT);
 
-        final GlowButton storyButton = new GlowButton(button, R.drawable.pg_buttonframe, 0);
+        final GlowButton storyButton = new GlowButton(button, R.drawable.pg_buttonframe_copy, 0);
         storyButtons.add(storyButton);
 
         storyButton.setOnClickListener(new View.OnClickListener() {
@@ -220,6 +222,10 @@ public class PlanningGameFragment extends Fragment implements UpdateFinish {
 
         /**********************************/
     }
+
+
+
+
 
     public void initPopup() {
         LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -33,7 +33,7 @@ public class Tab3 extends Fragment implements UpdateFinish {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v =inflater.inflate(R.layout.tab_3,container,false);
+        v =inflater.inflate(R.layout.activity_all_stories,container,false);
 
         PivotalSession session = PivotalSession.getInstance();
         if(session.getStatus().equals("loggedIn") && !session.getProjectID().equals("")) {

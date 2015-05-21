@@ -29,8 +29,8 @@ public class WearMessageListener extends WearableListenerService{
             projectID = pivotalSession.getProjectID();
 
             String message = new String(messageEvent.getData());
-            String name = parseBetween(message, "name", " and");
-            String description = parseBetween(message, "description", "");
+            String name = parseBetween(message, "name ", " and");
+            String description = parseBetween(message, "description ", "");
 
             if(pivotalSession.getStatus().equals("loggedIn") && name.length() > 0
                     && description.length() > 0) // If input was said correctly
@@ -58,18 +58,21 @@ public class WearMessageListener extends WearableListenerService{
         }
     }
 
-    private String parseBetween(String text, String startWord, String endWord) {
+    private static String parseBetween(String text, String startWord, String endWord) {
 
         int beginIndex = 0;
         int endIndex = text.length();
 
         if(startWord.length() > 0)
-            beginIndex = text.indexOf(startWord)+startWord.length();
+            beginIndex = text.indexOf(startWord);
+        if(beginIndex != -1)
+            beginIndex += startWord.length();
+
         if(endWord.length() > 0)
             endIndex = text.indexOf(endWord);
 
         String result = "";
-        if(beginIndex >= 0 && endIndex > 0)
+        if(beginIndex >= 0 && beginIndex < text.length() && endIndex > 0 && endIndex <= text.length())
             result = text.substring(beginIndex, endIndex);
         return result;
     }

@@ -22,7 +22,6 @@ public class DataProcessor {
     public static int branchIndex;
 
 
-
     public static void setBranchURL (String URL) {
 
         createdURL = URL;
@@ -82,7 +81,7 @@ public class DataProcessor {
         if(shaList.contains(sha)) {
             //System.out.println("The branch" + nameList.get(branchIndex) +  " is not changed!!!");
         } else {
-            //System.out.println("The branch" + nameList.get(branchIndex) + " is changed!!!");
+            System.out.println("The branch" + nameList.get(branchIndex) + " is changed!!!");
             shaList.set(branchIndex, sha);
         }
 

@@ -27,7 +27,6 @@ public class Github implements ConnectorResult {
 
         try {
 
-            //URL branchesURL = new URL("https://api.github.com/repos/Awarath/AgileDevelopmentProcesses/branches");
             URL branchesURL = new URL(DataProcessor.createdURL);
 
             connector.doHttpRequest(branchesURL, Connector.METHOD_GET);
@@ -39,9 +38,8 @@ public class Github implements ConnectorResult {
 
     @Override
     public void onConnectorResult(String result) {
+
         updateFinish.onUpdateFinished(0, result);
-
-
 
     }
 

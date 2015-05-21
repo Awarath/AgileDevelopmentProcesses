@@ -31,25 +31,11 @@ public class Tab2 extends Fragment {
 
             public void onClick(View v) {
 
-                //String userName = editText_User.getText().toString();
-                //String repositoryName = editText_Repo.getText().toString();
-
-
+                //Sending data to the intent
                 final Intent intent = new Intent(getActivity(), CreateOutputView.class);
                 intent.putExtra("name", editText_User.getText().toString());
                 intent.putExtra("repository", editText_Repo.getText().toString());
                 startActivity(intent);
-
-
-                //The link to parse
-                //CreateURL.setBranchURL("https://api.github.com/repos/Awarath/AgileDevelopmentProcesses/branches");
-                //DataProcessor.setBranchURL("https://api.github.com/repos/" + userName + "/" + repositoryName + "/branches");
-
-                //Initial the index for get branch name
-                //DataProcessor.branchIndex = 0;
-
-                //Start
-                //run(updateFinish);
 
             }
         });

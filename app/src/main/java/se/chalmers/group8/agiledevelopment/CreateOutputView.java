@@ -19,33 +19,34 @@ import se.chalmers.group8.github.connector.ParseSha;
 import se.chalmers.group8.service.connectors.UpdateFinish;
 
 /**
- * Created by Tio on 5/18/15.
+ * This class handle get and parse date from Github.
  */
 public class CreateOutputView extends Activity implements UpdateFinish {
 
-    //String userName;
-    //String repositoryName;
-    String userName = "Awarath";
-    String repositoryName = "AgileDevelopmentProcesses";
+    String userName;
+    String repositoryName;
+    //String userName = "Awarath";
+    //String repositoryName = "AgileDevelopmentProcesses";
 
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //userName = getIntent().getStringExtra("name");
-        //repositoryName = getIntent().getStringExtra("repository");
+        userName = getIntent().getStringExtra("name");
+        repositoryName = getIntent().getStringExtra("repository");
 
         //Handle empty input
-        if (userName == "null" || repositoryName == "null") {
+        if (userName == null || userName.equals("") || userName.length() == 0
+                || repositoryName.equals("") || repositoryName.equals("") || repositoryName.length() == 0) {
 
-            //Need to build a warning here!!!!!
-            String userName = "Awarath";
-            String repositoryName = "AgileDevelopmentProcesses";
+            //Need to build a warning here later
+            userName = "Awarath";
+            repositoryName = "AgileDevelopmentProcesses";
 
         } //else {
 
             //The link to parse
-            //CreateURL.setBranchURL("https://api.github.com/repos/Awarath/AgileDevelopmentProcesses/branches");
+
             DataProcessor.setBranchURL("https://api.github.com/repos/" + userName + "/" + repositoryName + "/branches");
 
             //Initial the index for get branch name
@@ -66,7 +67,7 @@ public class CreateOutputView extends Activity implements UpdateFinish {
         Timer timer = new Timer();
         NewTimerTask timerTask = new NewTimerTask(this);
 
-        //Update every 20 mins (1200s)
+        //Update every 20 minutes (1200s)
         timer.schedule(timerTask, 0, 1200000);
 
     }
@@ -75,7 +76,8 @@ public class CreateOutputView extends Activity implements UpdateFinish {
     public void onUpdateFinished(int callFinish, String result) {
 
         if (callFinish == 0) {
-            //For parsing the branches
+
+            //For parsing the branch status
             try {
 
                 JSONArray array = new JSONArray(result);
@@ -113,6 +115,7 @@ public class CreateOutputView extends Activity implements UpdateFinish {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
             // For parsing the sha
         } else if (callFinish == 1) {
             try {
@@ -126,26 +129,29 @@ public class CreateOutputView extends Activity implements UpdateFinish {
                 //Store the sha into a list for further checking update
                 DataProcessor.setShaList(message.toString());
 
-                //System.out.println("Branch: " + DataProcessor.nameList.get(DataProcessor.branchIndex));
-                DataProcessor.setTempBranch(DataProcessor.nameList.get(DataProcessor.branchIndex).toString());
-
                 //Check if the sha have changed, which means the branch is updated
                 DataProcessor.compareList(message.toString());
 
+                //Store branch name for the output
+                //System.out.println("Branch: " + DataProcessor.nameList.get(DataProcessor.branchIndex));
+                DataProcessor.setTempBranch(DataProcessor.nameList.get(DataProcessor.branchIndex).toString());
+
+                //Store author name for the output
                 //System.out.println("Author: " + name);
                 DataProcessor.setTempName(name.toString());
 
+                //Store branch change time for the output
                 //System.out.println("Time: " + time);
                 DataProcessor.setTempTime(time.toString());
 
+                //Store comment for the output
                 //System.out.println("Comment :" + message);
                 DataProcessor.setTempComment(message.toString());
 
                 //System.out.println("------------------------------------");
 
-
+                //Create TextView for showing output
                 TextView ntxt = new TextView(this);
-
 
                 //Create output string
                 String s = "Branch:" + DataProcessor.tempBranchList.get(DataProcessor.branchIndex) + "\n" +

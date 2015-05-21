@@ -46,6 +46,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="se.chalmers.group8.agiledevelopment.MainActivity" />
         </activity>
+        <activity
+            android:name=".CreateOutputView"
+            android:label="Create Output view" >
+        </activity>
     </application>
 
 </manifest>

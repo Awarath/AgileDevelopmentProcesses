@@ -2,6 +2,7 @@ package se.chalmers.group8.service.connectors;
 
 import android.util.Base64;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
